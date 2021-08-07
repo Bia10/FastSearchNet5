@@ -10,7 +10,8 @@ namespace FastSearchNet5.FileSearcher
     {
         private Func<FileInfo, bool> isValid;
 
-        public FileCancellationDelegateSearcher(string folder, Func<FileInfo, bool> isValid, CancellationToken token, ExecuteHandlers handlerOption, bool suppressOperationCanceledException)
+        public FileCancellationDelegateSearcher(string folder, Func<FileInfo, bool> isValid, 
+            CancellationToken token, ExecuteHandlers handlerOption, bool suppressOperationCanceledException)
             : base(folder, token, handlerOption, suppressOperationCanceledException)
         {
             this.isValid = isValid;

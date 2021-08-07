@@ -34,8 +34,8 @@ namespace FastSearchNet5.DirectorySearcher
             add => searcher.SearchCompleted += value;
             remove => searcher.SearchCompleted -= value;
         }
-        #region DirectoryCancellationPatternSearcher constructors
 
+        #region DirectoryCancellationPatternSearcher constructors
         /// <summary>
         /// Initialize a new instance of DirectorySearch class. 
         /// </summary>
@@ -46,13 +46,15 @@ namespace FastSearchNet5.DirectorySearcher
         /// <param name="suppressOperationCanceledException">Determines whether necessary suppress OperationCanceledException if it possible.</param>
         /// <exception cref="ArgumentException"></exception>
         /// <exception cref="ArgumentNullException"></exception>
-        public DirectorySearcher(string folder, string pattern, CancellationTokenSource tokenSource, ExecuteHandlers handlerOption = ExecuteHandlers.InCurrentTask, bool suppressOperationCanceledException = true)
+        public DirectorySearcher(string folder, string pattern, CancellationTokenSource tokenSource, 
+            ExecuteHandlers handlerOption = ExecuteHandlers.InCurrentTask, bool suppressOperationCanceledException = true)
         {
             CheckFolder(folder);
             CheckPattern(pattern);
             CheckTokenSource(tokenSource);
 
-            searcher = new DirectoryCancellationPatternSearcher(folder, pattern, tokenSource.Token, handlerOption, suppressOperationCanceledException);
+            searcher = new DirectoryCancellationPatternSearcher(folder, pattern, tokenSource.Token,
+                handlerOption, suppressOperationCanceledException);
             this.tokenSource = tokenSource;
         }
 
@@ -80,13 +82,15 @@ namespace FastSearchNet5.DirectorySearcher
         /// <param name="suppressOperationCanceledException">Determines whether necessary suppress OperationCanceledException if it possible.</param>
         /// <exception cref="ArgumentException"></exception>
         /// <exception cref="ArgumentNullException"></exception>
-        public DirectorySearcher(string folder, Func<DirectoryInfo, bool> isValid, CancellationTokenSource tokenSource, ExecuteHandlers handlerOption = ExecuteHandlers.InCurrentTask, bool suppressOperationCanceledException = true)
+        public DirectorySearcher(string folder, Func<DirectoryInfo, bool> isValid, CancellationTokenSource tokenSource, 
+            ExecuteHandlers handlerOption = ExecuteHandlers.InCurrentTask, bool suppressOperationCanceledException = true)
         {
             CheckFolder(folder);
             CheckDelegate(isValid);
             CheckTokenSource(tokenSource);
 
-            searcher = new DirectoryCancellationDelegateSearcher(folder, isValid, tokenSource.Token, handlerOption, suppressOperationCanceledException);
+            searcher = new DirectoryCancellationDelegateSearcher(folder, isValid, tokenSource.Token,
+                handlerOption, suppressOperationCanceledException);
             this.tokenSource = tokenSource;
         }
 
@@ -105,7 +109,7 @@ namespace FastSearchNet5.DirectorySearcher
         #endregion
         
         #region Checking methods
-        private void CheckFolder(string folder)
+        private static void CheckFolder(string folder)
         {
             switch (folder)
             {
@@ -120,7 +124,7 @@ namespace FastSearchNet5.DirectorySearcher
                 throw new ArgumentException("Argument does not represent an existing directory.", nameof(folder));
         }
 
-        private void CheckPattern(string pattern)
+        private static void CheckPattern(string pattern)
         {
             switch (pattern)
             {
@@ -131,13 +135,13 @@ namespace FastSearchNet5.DirectorySearcher
             }
         }
 
-        private void CheckDelegate(Func<DirectoryInfo, bool> isValid)
+        private static void CheckDelegate(Func<DirectoryInfo, bool> isValid)
         {
             if (isValid == null)
                 throw new ArgumentNullException(nameof(isValid), "Argument is null.");
         }
 
-        private void CheckTokenSource(CancellationTokenSource tokenSource)
+        private static void CheckTokenSource(CancellationTokenSource tokenSource)
         {
             if (tokenSource == null)
                 throw new ArgumentNullException(nameof(tokenSource), "Argument \"tokenSource\" is null.");
@@ -363,7 +367,8 @@ namespace FastSearchNet5.DirectorySearcher
             }
         }
 
-        private static void GetDirectories(string folder, ICollection<DirectoryInfo> result, Func<DirectoryInfo, bool> isValid)
+        private static void GetDirectories(string folder, ICollection<DirectoryInfo> result,
+            Func<DirectoryInfo, bool> isValid)
         {
             DirectoryInfo dirInfo;
             DirectoryInfo[] directories;
@@ -410,7 +415,8 @@ namespace FastSearchNet5.DirectorySearcher
             }
         }
 
-        private static IEnumerable<DirectoryInfo> GetStartDirectories(string folder, ConcurrentBag<DirectoryInfo> dirs, string pattern)
+        private static IEnumerable<DirectoryInfo> GetStartDirectories(string folder, ConcurrentBag<DirectoryInfo> dirs,
+            string pattern)
         {
             while (true)
             {
@@ -451,7 +457,8 @@ namespace FastSearchNet5.DirectorySearcher
             }
         }
 
-        private static List<DirectoryInfo> GetStartDirectories(string folder, ConcurrentBag<DirectoryInfo> dirs, Func<DirectoryInfo, bool> isValid)
+        private static List<DirectoryInfo> GetStartDirectories(string folder, ConcurrentBag<DirectoryInfo> dirs,
+            Func<DirectoryInfo, bool> isValid)
         {
             DirectoryInfo[] directories;
             try

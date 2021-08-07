@@ -12,7 +12,8 @@ namespace FastSearchNet5.FileSearcher
         protected CancellationToken Token;
         protected bool SuppressOperationCanceledException { get; set; }
 
-        public FileCancellationSearcherBase(string folder, CancellationToken token, ExecuteHandlers handlerOption, bool suppressOperationCanceledException) 
+        public FileCancellationSearcherBase(string folder, 
+            CancellationToken token, ExecuteHandlers handlerOption, bool suppressOperationCanceledException) 
             : base(folder, handlerOption)
         {
             Token = token;

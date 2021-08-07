@@ -149,7 +149,7 @@ namespace FastSearchNet5.DirectorySearcher
         #endregion
 
         #region Checking methods
-        private void CheckFolders(List<string> folders)
+        private static void CheckFolders(List<string> folders)
         {
             if (folders == null)
                 throw new ArgumentNullException(nameof(folders), "Argument is null.");
@@ -161,7 +161,7 @@ namespace FastSearchNet5.DirectorySearcher
                 CheckFolder(folder);
         }
 
-        private void CheckFolder(string folder)
+        private static void CheckFolder(string folder)
         {
             switch (folder)
             {
@@ -176,7 +176,7 @@ namespace FastSearchNet5.DirectorySearcher
                 throw new ArgumentException("Argument does not represent an existing directory.", nameof(folder));
         }
 
-        private void CheckPattern(string pattern)
+        private static void CheckPattern(string pattern)
         {
             switch (pattern)
             {
@@ -187,13 +187,13 @@ namespace FastSearchNet5.DirectorySearcher
             }
         }
 
-        private void CheckDelegate(Func<DirectoryInfo, bool> isValid)
+        private static void CheckDelegate(Func<DirectoryInfo, bool> isValid)
         {
             if (isValid == null)
                 throw new ArgumentNullException(nameof(isValid), "Argument is null.");
         }
 
-        private void CheckTokenSource(CancellationTokenSource tokenSource)
+        private static void CheckTokenSource(CancellationTokenSource tokenSource)
         {
             if (tokenSource == null)
                 throw new ArgumentNullException(nameof(tokenSource), "Argument is null.");

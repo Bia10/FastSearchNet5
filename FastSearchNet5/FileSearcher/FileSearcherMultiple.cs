@@ -60,7 +60,9 @@ namespace FastSearchNet5.FileSearcher
         /// <param name="suppressOperationCanceledException">Determines whether necessary suppress OperationCanceledException if it possible.</param>
         /// <exception cref="ArgumentException"></exception>
         /// <exception cref="ArgumentNullException"></exception>
-        public FileSearcherMultiple(List<string> folders, Func<FileInfo, bool> isValid, CancellationTokenSource tokenSource, ExecuteHandlers handlerOption, bool suppressOperationCanceledException)
+        public FileSearcherMultiple(List<string> folders, Func<FileInfo, bool> isValid, 
+            CancellationTokenSource tokenSource, ExecuteHandlers handlerOption = ExecuteHandlers.InCurrentTask,
+            bool suppressOperationCanceledException = true)
         {
             CheckFolders(folders);
             CheckDelegate(isValid);
@@ -71,38 +73,13 @@ namespace FastSearchNet5.FileSearcher
 
             foreach (var folder in folders)
             {
-                searchers.Add(new FileCancellationDelegateSearcher(folder, isValid, tokenSource.Token, handlerOption, false));
+                searchers.Add(new FileCancellationDelegateSearcher(folder, isValid, tokenSource.Token,
+                    handlerOption, false));
             }
             
             this.tokenSource = tokenSource;
         }
 
-        /// <summary>
-        /// Initializes a new instance of FileSearcherMultiple class.
-        /// </summary>
-        /// <param name="folders">Start search directories.</param>
-        /// <param name="isValid">The delegate that determines algorithm of file selection.</param>
-        /// <param name="tokenSource">Instance of CancellationTokenSource for search process cancellation possibility.</param>
-        /// <param name="handlerOption">Specifies where FilesFound event handlers are executed.</param>
-        /// <exception cref="ArgumentException"></exception>
-        /// <exception cref="ArgumentNullException"></exception>
-        public FileSearcherMultiple(List<string> folders, Func<FileInfo, bool> isValid, CancellationTokenSource tokenSource, ExecuteHandlers handlerOption)
-            : this(folders, isValid, tokenSource, handlerOption, true)
-        {
-        }
-
-        /// <summary>
-        /// Initializes a new instance of FileSearcherMultiple class.
-        /// </summary>
-        /// <param name="folders">Start search directories.</param>
-        /// <param name="isValid">The delegate that determines algorithm of file selection.</param>
-        /// <param name="tokenSource">Instance of CancellationTokenSource for search process cancellation possibility.</param>
-        /// <exception cref="ArgumentException"></exception>
-        /// <exception cref="ArgumentNullException"></exception>
-        public FileSearcherMultiple(List<string> folders, Func<FileInfo, bool> isValid, CancellationTokenSource tokenSource)
-            : this(folders, isValid, tokenSource, ExecuteHandlers.InCurrentTask, true)
-        {
-        }
         #endregion
 
         #region FileCancellationPatternSearcher constructors
@@ -116,7 +93,9 @@ namespace FastSearchNet5.FileSearcher
         /// <param name="suppressOperationCanceledException">Determines whether necessary suppress OperationCanceledException if it possible.</param>
         /// <exception cref="ArgumentException"></exception>
         /// <exception cref="ArgumentNullException"></exception>
-        public FileSearcherMultiple(List<string> folders, string pattern, CancellationTokenSource tokenSource, ExecuteHandlers handlerOption, bool suppressOperationCanceledException)
+        public FileSearcherMultiple(List<string> folders, string pattern,
+            CancellationTokenSource tokenSource, ExecuteHandlers handlerOption = ExecuteHandlers.InCurrentTask,
+            bool suppressOperationCanceledException = true)
         {
             CheckFolders(folders);
             CheckPattern(pattern);
@@ -127,7 +106,8 @@ namespace FastSearchNet5.FileSearcher
 
             foreach (var folder in folders)
             {
-                searchers.Add(new FileCancellationPatternSearcher(folder, pattern, tokenSource.Token, handlerOption, false));
+                searchers.Add(new FileCancellationPatternSearcher(folder, pattern, tokenSource.Token,
+                    handlerOption, false));
             }
 
             this.tokenSource = tokenSource;
@@ -142,21 +122,9 @@ namespace FastSearchNet5.FileSearcher
         /// <param name="handlerOption">Specifies where FilesFound event handlers are executed.</param>
         /// <exception cref="ArgumentException"></exception>
         /// <exception cref="ArgumentNullException"></exception>
-        public FileSearcherMultiple(List<string> folders, string pattern, CancellationTokenSource tokenSource, ExecuteHandlers handlerOption)
+        public FileSearcherMultiple(List<string> folders, string pattern, 
+            CancellationTokenSource tokenSource, ExecuteHandlers handlerOption)
             : this(folders, pattern, tokenSource, handlerOption, true)
-        {
-        }
-
-        /// <summary>
-        /// Initializes a new instance of FileSearcherMultiple class.
-        /// </summary>
-        /// <param name="folders">Start search directories.</param>
-        /// <param name="pattern">The search pattern.</param>
-        /// <param name="tokenSource">Instance of CancellationTokenSource for search process cancellation possibility.</param>
-        /// <exception cref="ArgumentException"></exception>
-        /// <exception cref="ArgumentNullException"></exception>
-        public FileSearcherMultiple(List<string> folders, string pattern, CancellationTokenSource tokenSource) 
-            : this(folders, pattern, tokenSource, ExecuteHandlers.InCurrentTask, true)
         {
         }
 
@@ -168,13 +136,13 @@ namespace FastSearchNet5.FileSearcher
         /// <exception cref="ArgumentException"></exception>
         /// <exception cref="ArgumentNullException"></exception>
         public FileSearcherMultiple(List<string> folders, CancellationTokenSource tokenSource) 
-            : this(folders, "*", tokenSource, ExecuteHandlers.InCurrentTask, true)
+            : this(folders, "*", tokenSource)
         {
         }
         #endregion
 
         #region Checking methods
-        private void CheckFolders(List<string> folders)
+        private static void CheckFolders(List<string> folders)
         {
             if (folders == null)
                 throw new ArgumentNullException(nameof(folders), "Argument is null.");
@@ -186,7 +154,7 @@ namespace FastSearchNet5.FileSearcher
                 CheckFolder(folder);
         }
 
-        private void CheckFolder(string folder)
+        private static void CheckFolder(string folder)
         {
             switch (folder)
             {
@@ -201,7 +169,7 @@ namespace FastSearchNet5.FileSearcher
                 throw new ArgumentException("Argument does not represent an existing directory.", nameof(folder));
         }
 
-        private void CheckPattern(string pattern)
+        private static void CheckPattern(string pattern)
         {
             switch (pattern)
             {
@@ -212,13 +180,13 @@ namespace FastSearchNet5.FileSearcher
             }
         }
 
-        private void CheckDelegate(Func<FileInfo, bool> isValid)
+        private static void CheckDelegate(Func<FileInfo, bool> isValid)
         {
             if (isValid == null)
                 throw new ArgumentNullException(nameof(isValid), "Argument is null.");
         }
 
-        private void CheckTokenSource(CancellationTokenSource tokenSource)
+        private static void CheckTokenSource(CancellationTokenSource tokenSource)
         {
             if (tokenSource == null)
                 throw new ArgumentNullException(nameof(tokenSource), "Argument is null.");

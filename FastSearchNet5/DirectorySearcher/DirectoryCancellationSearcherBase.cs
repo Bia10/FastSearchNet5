@@ -19,7 +19,8 @@ namespace FastSearchNet5.DirectorySearcher
         protected CancellationToken token;
         protected bool SuppressOperationCanceledException { get; set; }
 
-        public DirectoryCancellationSearcherBase(string folder, CancellationToken token, ExecuteHandlers handlerOption, bool suppressOperationCanceledException)
+        public DirectoryCancellationSearcherBase(string folder, CancellationToken token, 
+            ExecuteHandlers handlerOption, bool suppressOperationCanceledException)
         {
             this.folder = folder;
             this.token = token;
@@ -107,6 +108,6 @@ namespace FastSearchNet5.DirectorySearcher
         }
 
         protected abstract void GetDirectories(string folder);
-        protected abstract List<DirectoryInfo> GetStartDirectories(string folder);
+        protected abstract IEnumerable<DirectoryInfo> GetStartDirectories(string folder);
     }
 }

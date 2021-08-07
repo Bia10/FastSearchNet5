@@ -12,7 +12,7 @@ namespace FastSearchNet5.DirectorySearcher
         /// <summary>
         /// Gets a list of finding directories.
         /// </summary>
-        public List<DirectoryInfo> Directories { get; private set;}
+        private List<DirectoryInfo> Directories { get; set;}
 
         /// <summary>
         /// Initialize a new instance of DirectoryEventArgs class that describes a FilesFound event.

@@ -34,8 +34,8 @@ namespace FastSearchNet5.FileSearcher
             add => searcher.SearchCompleted += value;
             remove => searcher.SearchCompleted -= value;
         }
-        #region FilePatternSearcher constructors 
 
+        #region FilePatternSearcher constructors
         /// <summary>
         /// Initializes a new instance of FileSearcher class.
         /// </summary>
@@ -44,7 +44,8 @@ namespace FastSearchNet5.FileSearcher
         /// <param name="handlerOption">Specifies where FilesFound event handlers are executed.</param>
         /// <exception cref="ArgumentException"></exception>
         /// <exception cref="ArgumentNullException"></exception>
-        public FileSearcher(string folder, string pattern = "*", ExecuteHandlers handlerOption = ExecuteHandlers.InCurrentTask)
+        public FileSearcher(string folder, string pattern = "*", 
+            ExecuteHandlers handlerOption = ExecuteHandlers.InCurrentTask)
         {
             CheckFolder(folder);
             CheckPattern(pattern);
@@ -62,7 +63,8 @@ namespace FastSearchNet5.FileSearcher
         /// <param name="handlerOption">Specifies where FilesFound event handlers are executed.</param>
         /// <exception cref="ArgumentException"></exception>
         /// <exception cref="ArgumentNullException"></exception>
-        public FileSearcher(string folder, Func<FileInfo, bool> isValid, ExecuteHandlers handlerOption = ExecuteHandlers.InCurrentTask)
+        public FileSearcher(string folder, Func<FileInfo, bool> isValid, 
+            ExecuteHandlers handlerOption = ExecuteHandlers.InCurrentTask)
         {
             CheckFolder(folder);
             CheckDelegate(isValid);
@@ -89,7 +91,8 @@ namespace FastSearchNet5.FileSearcher
             CheckPattern(pattern);
             CheckTokenSource(tokenSource);
 
-            searcher = new FileCancellationPatternSearcher(folder, pattern, tokenSource.Token, handlerOption, suppressOperationCanceledException);
+            searcher = new FileCancellationPatternSearcher(folder, pattern, tokenSource.Token,
+                handlerOption, suppressOperationCanceledException);
             this.tokenSource = tokenSource;
         }
 
@@ -137,14 +140,14 @@ namespace FastSearchNet5.FileSearcher
             CheckDelegate(isValid);
             CheckTokenSource(tokenSource);
 
-            searcher = new FileCancellationDelegateSearcher(folder, isValid, tokenSource.Token, handlerOption, suppressOperationCanceledException);
+            searcher = new FileCancellationDelegateSearcher(folder, isValid, tokenSource.Token,
+                handlerOption, suppressOperationCanceledException);
             this.tokenSource = tokenSource;
         }
-
         #endregion
 
         #region Checking methods
-        private void CheckFolder(string folder)
+        private static void CheckFolder(string folder)
         {
             switch (folder)
             {
@@ -159,7 +162,7 @@ namespace FastSearchNet5.FileSearcher
                 throw new ArgumentException("Argument does not represent an existing directory.", nameof(folder));
         }
 
-        private void CheckPattern(string pattern)
+        private static void CheckPattern(string pattern)
         {
             switch (pattern)
             {
@@ -170,13 +173,13 @@ namespace FastSearchNet5.FileSearcher
             }
         }
 
-        private void CheckDelegate(Func<FileInfo, bool> isValid)
+        private static void CheckDelegate(Func<FileInfo, bool> isValid)
         {
             if (isValid == null)
                 throw new ArgumentNullException(nameof(isValid), "Argument is null.");
         }
 
-        private void CheckTokenSource(CancellationTokenSource tokenSource)
+        private static void CheckTokenSource(CancellationTokenSource tokenSource)
         {
             if (tokenSource == null)
                 throw new ArgumentNullException(nameof(tokenSource), "Argument is null.");
@@ -434,7 +437,8 @@ namespace FastSearchNet5.FileSearcher
         #endregion
 
         #region Private members
-        private static IEnumerable<DirectoryInfo> GetStartDirectories(string folder, ConcurrentBag<FileInfo> files, string pattern) 
+        private static IEnumerable<DirectoryInfo> GetStartDirectories(string folder, 
+            ConcurrentBag<FileInfo> files, string pattern) 
         { 
             while (true)
             {
@@ -475,7 +479,8 @@ namespace FastSearchNet5.FileSearcher
             }
         }
 
-        private static IEnumerable<DirectoryInfo> GetStartDirectories(string folder, ConcurrentBag<FileInfo> resultFiles, Func<FileInfo, bool> isValid)
+        private static IEnumerable<DirectoryInfo> GetStartDirectories(string folder, 
+            ConcurrentBag<FileInfo> resultFiles, Func<FileInfo, bool> isValid)
         {
             while (true)
             {

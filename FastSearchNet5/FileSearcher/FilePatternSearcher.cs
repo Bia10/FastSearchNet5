@@ -9,7 +9,8 @@ namespace FastSearchNet5.FileSearcher
     {
         private string pattern;
 
-        public FilePatternSearcher(string folder, string pattern = "*", ExecuteHandlers handlerOption = ExecuteHandlers.InCurrentTask) 
+        public FilePatternSearcher(string folder, string pattern = "*",
+            ExecuteHandlers handlerOption = ExecuteHandlers.InCurrentTask) 
             : base(folder, handlerOption)
         {
             this.pattern = pattern;

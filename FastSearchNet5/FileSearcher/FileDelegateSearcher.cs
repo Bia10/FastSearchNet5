@@ -9,7 +9,8 @@ namespace FastSearchNet5.FileSearcher
     {
         private Func<FileInfo, bool> isValid;
 
-        public FileDelegateSearcher(string folder, Func<FileInfo, bool> isValid, ExecuteHandlers handlerOption = ExecuteHandlers.InCurrentTask)
+        public FileDelegateSearcher(string folder, Func<FileInfo, bool> isValid, 
+            ExecuteHandlers handlerOption = ExecuteHandlers.InCurrentTask)
             : base(folder, handlerOption)
         {
             this.isValid = isValid;

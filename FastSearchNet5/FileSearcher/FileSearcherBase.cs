@@ -19,7 +19,7 @@ namespace FastSearchNet5.FileSearcher
         public FileSearcherBase(string folder, ExecuteHandlers handlerOption)
         {
             this.folder = folder;
-            this.HandlerOption = handlerOption;
+            HandlerOption = handlerOption;
             taskHandlers = new ConcurrentBag<Task>();
         }
 
@@ -30,9 +30,9 @@ namespace FastSearchNet5.FileSearcher
         {
             var startDirs = GetStartDirectories(folder);
 
-            startDirs.AsParallel().ForAll((d) =>
+            startDirs.AsParallel().ForAll(d =>
             {
-                GetStartDirectories(d.FullName).AsParallel().ForAll((dir) =>
+                GetStartDirectories(d.FullName).AsParallel().ForAll(dir =>
                 {
                     GetFiles(dir.FullName);
                 });

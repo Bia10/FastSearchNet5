@@ -10,7 +10,8 @@ namespace FastSearchNet5.FileSearcher
     {
         private string pattern;
 
-        public FileCancellationPatternSearcher(string folder, string pattern, CancellationToken token, ExecuteHandlers handlerOption, bool suppressOperationCanceledException)
+        public FileCancellationPatternSearcher(string folder, string pattern, 
+            CancellationToken token, ExecuteHandlers handlerOption, bool suppressOperationCanceledException)
             : base(folder, token, handlerOption, suppressOperationCanceledException)
         {
             this.pattern = pattern;

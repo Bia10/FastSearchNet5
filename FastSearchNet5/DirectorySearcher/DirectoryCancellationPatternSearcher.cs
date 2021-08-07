@@ -69,7 +69,7 @@ namespace FastSearchNet5.DirectorySearcher
             }
         }
 
-        protected override List<DirectoryInfo> GetStartDirectories(string folder)
+        protected override IEnumerable<DirectoryInfo> GetStartDirectories(string folder)
         {
             while (true)
             {
