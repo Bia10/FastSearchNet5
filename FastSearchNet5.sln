@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31515.178
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FastSearchNet5", "FastSearchNet5\FastSearchNet5.csproj", "{F24DA120-DCFC-4BEC-8840-A9722EDE4974}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FastSearchNet5", "src\FastSearchNet5\FastSearchNet5.csproj", "{F24DA120-DCFC-4BEC-8840-A9722EDE4974}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FastSearchNet5.TestConsole", "FastSearchNet5.TestConsole\FastSearchNet5.TestConsole.csproj", "{A4E7D619-25CF-42EE-BB7E-3AAF1059A7D0}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FastSearchNet5.TestConsole", "src\FastSearchNet5.TestConsole\FastSearchNet5.TestConsole.csproj", "{A4E7D619-25CF-42EE-BB7E-3AAF1059A7D0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
