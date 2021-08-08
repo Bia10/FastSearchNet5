@@ -4,9 +4,10 @@
 Well i needed a Net5 version as original is .net framework.
 
 * Net5
-* Updated the code to use modern C# supported features (lambas, method groups, optional parametrs, LINQ, etc ... )
+* Updated the code to use modern C# supported features (lambdas, method groups, optional parametrs, LINQ, etc ...)
 * Cleaned up unused stuff/redundancies/too many empty lines
 * Reduced recursion where while (true) suffices
+* Removed constructors which became reduntant after introduction of optional parametrs
 
 # FastSearchLibrary
 The multithreading .NET library that provides opportunity to fast find files or directories using different search criteria.
