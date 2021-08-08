@@ -375,11 +375,11 @@ namespace FastSearchNet5.FileSearcher
 
             var startDirs = GetStartDirectories(folder, files, pattern);
 
-            startDirs.AsParallel().ForAll((d) =>
+            startDirs.AsParallel().ForAll(d =>
             {
-                GetStartDirectories(d.FullName, files, pattern).AsParallel().ForAll((dir) =>
+                GetStartDirectories(d.FullName, files, pattern).AsParallel().ForAll(dir =>
                 {
-                    GetFiles(dir.FullName, pattern).ForEach((f) => files.Add(f));
+                    GetFiles(dir.FullName, pattern).ForEach(f => files.Add(f));
                 });
             });
 
@@ -400,11 +400,11 @@ namespace FastSearchNet5.FileSearcher
 
             var startDirs = GetStartDirectories(folder, files, isValid);
 
-            startDirs.AsParallel().ForAll((d) =>
+            startDirs.AsParallel().ForAll(d =>
             {
-                GetStartDirectories(d.FullName, files, isValid).AsParallel().ForAll((dir) =>
+                GetStartDirectories(d.FullName, files, isValid).AsParallel().ForAll(dir =>
                 {
-                    GetFiles(dir.FullName, isValid).ForEach((f) => files.Add(f));
+                    GetFiles(dir.FullName, isValid).ForEach(f => files.Add(f));
                 });
             });
 

@@ -16,7 +16,7 @@ namespace FastSearchNet5.FileSearcher
             this.isValid = isValid;
         }
 
-        public FileDelegateSearcher(string folder): this(folder, (arg) => true)
+        public FileDelegateSearcher(string folder): this(folder, arg => true)
         {
         }
 

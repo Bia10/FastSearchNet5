@@ -77,9 +77,9 @@ namespace FastSearchNet5.FileSearcher
         {
             var startDirs = GetStartDirectories(folder);
 
-            startDirs.AsParallel().WithCancellation(Token).ForAll((d) =>
+            startDirs.AsParallel().WithCancellation(Token).ForAll(d =>
             {
-                GetStartDirectories(d.FullName).AsParallel().WithCancellation(Token).ForAll((dir) =>
+                GetStartDirectories(d.FullName).AsParallel().WithCancellation(Token).ForAll(dir =>
                 {
                     GetFiles(dir.FullName);
                 });

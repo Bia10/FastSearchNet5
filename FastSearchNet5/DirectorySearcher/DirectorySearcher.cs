@@ -257,11 +257,11 @@ namespace FastSearchNet5.DirectorySearcher
 
             var startDirs = GetStartDirectories(folder, dirs, pattern);
 
-            startDirs.AsParallel().ForAll((d) =>
+            startDirs.AsParallel().ForAll(d =>
             {
-                GetStartDirectories(d.FullName, dirs, pattern).AsParallel().ForAll((dir) =>
+                GetStartDirectories(d.FullName, dirs, pattern).AsParallel().ForAll(dir =>
                 {
-                    GetDirectories(dir.FullName, pattern).ForEach((r) => dirs.Add(r));
+                    GetDirectories(dir.FullName, pattern).ForEach(r => dirs.Add(r));
                 });
             });
 
@@ -284,11 +284,11 @@ namespace FastSearchNet5.DirectorySearcher
 
             var startDirs = GetStartDirectories(folder, dirs, isValid);
 
-            startDirs.AsParallel().ForAll((d) =>
+            startDirs.AsParallel().ForAll(d =>
             {
-                GetStartDirectories(d.FullName, dirs, isValid).AsParallel().ForAll((dir) =>
+                GetStartDirectories(d.FullName, dirs, isValid).AsParallel().ForAll(dir =>
                 {
-                    GetDirectories(dir.FullName, isValid).ForEach((r) => dirs.Add(r));
+                    GetDirectories(dir.FullName, isValid).ForEach(r => dirs.Add(r));
                 });
             });
 
@@ -352,7 +352,7 @@ namespace FastSearchNet5.DirectorySearcher
                 return;
             }
 
-            Array.ForEach(directories, (d) 
+            Array.ForEach(directories, d 
                 => GetDirectories(d.FullName, result, pattern));
 
             try
@@ -393,12 +393,12 @@ namespace FastSearchNet5.DirectorySearcher
                 return;
             }
 
-            Array.ForEach(directories, (d) 
+            Array.ForEach(directories, d 
                 => GetDirectories(d.FullName, result, isValid));
 
             try
             {
-                Array.ForEach(dirInfo.GetDirectories(), (d) =>
+                Array.ForEach(dirInfo.GetDirectories(), d =>
                 {
                     if (isValid(d))
                         result.Add(d);
@@ -469,7 +469,7 @@ namespace FastSearchNet5.DirectorySearcher
                 switch (directories.Length)
                 {
                     case > 1:
-                        Array.ForEach(directories, (d) =>
+                        Array.ForEach(directories, d =>
                         {
                             if (isValid(d))
                                 dirs.Add(d);
@@ -494,7 +494,7 @@ namespace FastSearchNet5.DirectorySearcher
             }
 
             // if directories.Length == 1
-            Array.ForEach(directories, (d) =>
+            Array.ForEach(directories, d =>
             {
                 if (isValid(d))
                     dirs.Add(d);

@@ -98,9 +98,9 @@ namespace FastSearchNet5.DirectorySearcher
         {
             var startDirs = GetStartDirectories(folder);
 
-            startDirs.AsParallel().WithCancellation(token).ForAll((d) =>
+            startDirs.AsParallel().WithCancellation(token).ForAll(d =>
             {
-                GetStartDirectories(d.FullName).AsParallel().WithCancellation(token).ForAll((dir) =>
+                GetStartDirectories(d.FullName).AsParallel().WithCancellation(token).ForAll(dir =>
                 {
                     GetDirectories(dir.FullName);
                 });

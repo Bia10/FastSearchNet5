@@ -23,11 +23,11 @@ namespace FastSearchNet5.DirectorySearcher
         {
             add
             {
-                searchers.ForEach((s) => s.DirectoriesFound += value);
+                searchers.ForEach(s => s.DirectoriesFound += value);
             }
             remove
             {
-                searchers.ForEach((s) => s.DirectoriesFound -= value);
+                searchers.ForEach(s => s.DirectoriesFound -= value);
             }
         }
 
@@ -60,8 +60,9 @@ namespace FastSearchNet5.DirectorySearcher
         /// <param name="suppressOperationCanceledException">Determines whether necessary suppress OperationCanceledException if it possible.</param>
         /// <exception cref="ArgumentException"></exception>
         /// <exception cref="ArgumentNullException"></exception>
-        public DirectorySearcherMultiple(List<string> folders, Func<DirectoryInfo, bool> isValid, CancellationTokenSource tokenSource, 
-            ExecuteHandlers handlerOption = ExecuteHandlers.InCurrentTask, bool suppressOperationCanceledException = true)
+        public DirectorySearcherMultiple(List<string> folders, Func<DirectoryInfo, bool> isValid,
+            CancellationTokenSource tokenSource, ExecuteHandlers handlerOption = ExecuteHandlers.InCurrentTask,
+            bool suppressOperationCanceledException = true)
         {
              CheckFolders(folders);
              CheckDelegate(isValid);
@@ -72,7 +73,8 @@ namespace FastSearchNet5.DirectorySearcher
 
              foreach (var folder in folders)
              {
-                 searchers.Add(new DirectoryCancellationDelegateSearcher(folder, isValid, tokenSource.Token, handlerOption, false));
+                 searchers.Add(new DirectoryCancellationDelegateSearcher(folder, isValid, tokenSource.Token,
+                     handlerOption, false));
              }
 
              this.tokenSource = tokenSource;
@@ -86,7 +88,8 @@ namespace FastSearchNet5.DirectorySearcher
         /// <param name="tokenSource">Instance of CancellationTokenSource for search process cancellation possibility.</param>
         /// <exception cref="ArgumentException"></exception>
         /// <exception cref="ArgumentNullException"></exception>
-        public DirectorySearcherMultiple(List<string> folders, Func<DirectoryInfo, bool> isValid, CancellationTokenSource tokenSource)
+        public DirectorySearcherMultiple(List<string> folders, Func<DirectoryInfo, bool> isValid, 
+            CancellationTokenSource tokenSource)
             : this(folders, isValid, tokenSource, ExecuteHandlers.InCurrentTask)
         {
         }
@@ -115,7 +118,8 @@ namespace FastSearchNet5.DirectorySearcher
 
             foreach (var folder in folders)
             {
-                searchers.Add(new DirectoryCancellationPatternSearcher(folder, pattern, tokenSource.Token, handlerOption, false));
+                searchers.Add(new DirectoryCancellationPatternSearcher(folder, pattern, tokenSource.Token,
+                    handlerOption, false));
             }
 
             this.tokenSource = tokenSource;
@@ -130,7 +134,8 @@ namespace FastSearchNet5.DirectorySearcher
         /// <param name="handlerOption">Specifies where DirectoriesFound event handlers are executed.</param>
         /// <exception cref="ArgumentException"></exception>
         /// <exception cref="ArgumentNullException"></exception>
-        public DirectorySearcherMultiple(List<string> folders, string pattern, CancellationTokenSource tokenSource, ExecuteHandlers handlerOption)
+        public DirectorySearcherMultiple(List<string> folders, string pattern, CancellationTokenSource tokenSource,
+            ExecuteHandlers handlerOption)
             : this (folders, pattern, tokenSource, handlerOption, true)
         {
         }

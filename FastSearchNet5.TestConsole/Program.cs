@@ -37,7 +37,7 @@ namespace FastSearchNet5.TestConsole
                @"D:\"
             };
 
-            var searcher = new FileSearcherMultiple(searchDirectories, (f) 
+            var searcher = new FileSearcherMultiple(searchDirectories, f 
                 => Regex.IsMatch(f.Name, pattern), new CancellationTokenSource());
 
             searcher.FilesFound += Searcher_FilesFound;
@@ -49,7 +49,8 @@ namespace FastSearchNet5.TestConsole
             }
             catch (AggregateException ex)
             {
-                if (ex.InnerException != null) Console.WriteLine($"Error occurred: {ex.InnerException.Message}");
+                if (ex.InnerException != null) 
+                    Console.WriteLine($"Error occurred: {ex.InnerException.Message}");
             }
             catch (Exception ex)
             {
@@ -65,7 +66,7 @@ namespace FastSearchNet5.TestConsole
         {
             lock (locker)
             {
-                arg.Files.ForEach((f) =>
+                arg.Files.ForEach(f =>
                 {
                     files.Add(f); 
                     Console.WriteLine($"File location: {f.FullName}\nCreation.Time: {f.CreationTime}\n");

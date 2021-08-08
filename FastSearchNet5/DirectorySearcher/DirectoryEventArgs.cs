@@ -7,7 +7,7 @@ namespace FastSearchNet5.DirectorySearcher
     /// <summary>
     /// Provides data for DirectoriesFound event.
     /// </summary>
-    public class DirectoryEventArgs: EventArgs
+    public class DirectoryEventArgs : EventArgs
     {
         /// <summary>
         /// Gets a list of finding directories.

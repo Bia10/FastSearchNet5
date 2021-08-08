@@ -22,12 +22,11 @@ namespace FastSearchNet5.FileSearcher
         {
             add
             {
-                searchers.ForEach((s) => s.FilesFound += value);
+                searchers.ForEach(s => s.FilesFound += value);
             }
-
             remove
             {
-                searchers.ForEach((s) => s.FilesFound -= value);
+                searchers.ForEach(s => s.FilesFound -= value);
             }
         }
 
@@ -79,7 +78,6 @@ namespace FastSearchNet5.FileSearcher
             
             this.tokenSource = tokenSource;
         }
-
         #endregion
 
         #region FileCancellationPatternSearcher constructors
