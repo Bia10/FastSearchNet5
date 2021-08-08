@@ -24,24 +24,32 @@ namespace FastSearchNet5.TestConsole
 
         private static async void StartSearch(string pattern)
         {
-            stopWatch = new Stopwatch();
-            stopWatch.Start();
-
-            Console.WriteLine("Search had been started.\n");
-
             files = new List<FileInfo>();
 
-            var searchDirectories = new List<string>
+            var searchDirectories = new List<string>();
+            var myDrives = DriveInfo.GetDrives();
+
+            foreach (var drive in myDrives)
             {
-               @"C:\",
-               @"D:\"
-            };
+                if (drive.IsReady != true) continue;
+
+                Console.WriteLine("Adding disk new disk to search:" +
+                                  "\n Name: {0} \n Type: {1} \n Label: {2} \n File System: {3} \n",
+                                  drive.Name, drive.DriveType, drive.VolumeLabel, drive.DriveFormat);
+
+                searchDirectories.Add(drive.Name);
+            }
+
+            Console.WriteLine("Search had been started. \n");
+
+            stopWatch = new Stopwatch();
+            stopWatch.Start();
 
             var searcher = new FileSearcherMultiple(searchDirectories, f 
                 => Regex.IsMatch(f.Name, pattern), new CancellationTokenSource());
 
-            searcher.FilesFound += Searcher_FilesFound;
-            searcher.SearchCompleted += Searcher_SearchCompleted;
+            searcher.FilesFound += SearcherFilesFound;
+            searcher.SearchCompleted += SearcherSearchCompleted;
 
             try
             {
@@ -58,23 +66,23 @@ namespace FastSearchNet5.TestConsole
             }
             finally
             {
-                Console.Write("\nPress any key to continue...");
+                Console.Write("\n Press any key to continue...");
             }
         }
 
-        private static void Searcher_FilesFound(object sender, FileEventArgs arg)
+        private static void SearcherFilesFound(object sender, FileEventArgs arg)
         {
             lock (locker)
             {
                 arg.Files.ForEach(f =>
                 {
                     files.Add(f); 
-                    Console.WriteLine($"File location: {f.FullName}\nCreation.Time: {f.CreationTime}\n");
+                    Console.WriteLine($"File location: {f.FullName} \n Creation.Time: {f.CreationTime} \n");
                 });
             }
         }
 
-        private static void Searcher_SearchCompleted(object sender, SearchCompletedEventArgs arg)
+        private static void SearcherSearchCompleted(object sender, SearchCompletedEventArgs arg)
         {
             stopWatch.Stop();
 
