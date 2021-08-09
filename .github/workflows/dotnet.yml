@@ -1,0 +1,33 @@
+name: build-test_package-push .NET 5.0.x
+
+on:
+  push:
+    branches: [ master ]
+    
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 5.0.x
+    - name: Restore dependencies
+      run: dotnet restore
+    - name: Build projects.
+      run: dotnet build --configuration Release --no-restore
+  # - name: Test
+   #  run: dotnet test --no-build --verbosity normal
+    - name: Nuget Pack
+      run: dotnet pack -c release
+      working-directory: ./src/FastSearchNet5
+    - name: Nuget Push to GitHub
+      run: dotnet nuget push *.nupkg --skip-duplicate -k ${{ secrets.GITHUB_TOKEN }} -s https://nuget.pkg.github.com/Bia10/index.json
+      working-directory: ./src/FastSearchNet5/bin/release/
+    - name: Publish to Nuget
+      uses: brandedoutcast/publish-nuget@v2.5.5
+      with:
+          PROJECT_FILE_PATH: src/FastSearchNet5/FastSearchNet5.csproj
+          NUGET_KEY: ${{secrets.NUGET_API_KEY}}
