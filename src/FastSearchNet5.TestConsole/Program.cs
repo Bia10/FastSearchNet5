@@ -1,94 +1,46 @@
-﻿using FastSearchNet5.FileSearcher;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
-using System.Text.RegularExpressions;
-using System.Threading;
+﻿using System;
 
 namespace FastSearchNet5.TestConsole
 {
     internal static class Program
     {
-        private static readonly object locker = new();
-        private static List<FileInfo> files;
-        private static Stopwatch stopWatch;
-
         private static void Main()
         {
-            const string searchPattern = "localhost v95.exe";
-            StartSearch(searchPattern);
-
-            Console.ReadKey(true);
+            var showMenu = true;
+            while (showMenu)
+            {
+                showMenu = MainMenu();
+            }
         }
 
-        private static async void StartSearch(string pattern)
+        private static bool MainMenu()
         {
-            files = new List<FileInfo>();
+            Console.Clear();
+            Console.WriteLine("\nChoose sample to run:");
+            Console.WriteLine("1) Scan all disks for file.");
+            Console.WriteLine("2) ...");
+            Console.WriteLine("3) End");
+            Console.Write("\nSelect an option:");
 
-            var searchDirectories = new List<string>();
-            var myDrives = DriveInfo.GetDrives();
-
-            foreach (var drive in myDrives)
+            switch (Console.ReadLine())
             {
-                if (drive.IsReady != true) continue;
+                case "1":
+                    {
+                        Console.WriteLine("Enter file name or pattern to search for:");
+                        Samples.ScanDisks.Main(Console.ReadLine());
+                    }
+                    return true;
 
-                Console.WriteLine("Adding disk new disk to search:" +
-                                  "\n Name: {0} \n Type: {1} \n Label: {2} \n File System: {3} \n",
-                                  drive.Name, drive.DriveType, drive.VolumeLabel, drive.DriveFormat);
+                case "2":
+                    return true;
 
-                searchDirectories.Add(drive.Name);
-            }
+                case "3":
+                    return false;
 
-            Console.WriteLine("Search had been started. \n");
-
-            stopWatch = new Stopwatch();
-            stopWatch.Start();
-
-            var searcher = new FileSearcherMultiple(searchDirectories, f 
-                => Regex.IsMatch(f.Name, pattern), new CancellationTokenSource());
-
-            searcher.FilesFound += SearcherFilesFound;
-            searcher.SearchCompleted += SearcherSearchCompleted;
-
-            try
-            {
-                await searcher.StartSearchAsync();
-            }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerException != null) 
-                    Console.WriteLine($"Error occurred: {ex.InnerException.Message}");
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Error occurred: {ex.Message}");
-            }
-            finally
-            {
-                Console.Write("\n Press any key to continue...");
+                default:
+                    return true;
             }
         }
 
-        private static void SearcherFilesFound(object sender, FileEventArgs arg)
-        {
-            lock (locker)
-            {
-                arg.Files.ForEach(f =>
-                {
-                    files.Add(f); 
-                    Console.WriteLine($"File location: {f.FullName} \n Creation.Time: {f.CreationTime} \n");
-                });
-            }
-        }
-
-        private static void SearcherSearchCompleted(object sender, SearchCompletedEventArgs arg)
-        {
-            stopWatch.Stop();
-
-            Console.WriteLine(arg.IsCanceled ? "Search stopped." : "Search completed.");
-            Console.WriteLine($"Files found: {files.Count}"); 
-            Console.WriteLine($"Time spent: {stopWatch.Elapsed.Minutes} min {stopWatch.Elapsed.Seconds} s {stopWatch.Elapsed.Milliseconds} ms");
-        }
     }
 }
